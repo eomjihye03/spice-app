@@ -1,0 +1,49 @@
+plugins {
+    id 'application'
+
+     // Eclipse IDE 에서 사용할 설정 파일을 준비할 때 사용할 도구
+    id 'eclipse'
+}
+
+repositories { // 자바 라이브러리가 저장된 공용 보관소
+    mavenCentral() // Maven Central Repository
+}
+
+dependencies { // 프로젝트에서 사용할 라이브러리 - 빌드할 때 자동으로 다운로드
+
+    implementation 'com.mysql:mysql-connector-j:9.3.0'
+    
+    testImplementation libs.junit.jupiter
+
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    implementation libs.guava
+    
+}
+
+java {  // 자바 소스 파일을 컴파일할 때 기준이 되는 언어 버전
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+application {  // Gradle 에서 애플리케이션을 실행할 때 기본 클래스  
+    mainClass = 'database.spice.App'
+}
+
+tasks.named('test') { // 단위 테스트할 때 사용할 플랫폼 지정
+    useJUnitPlatform()
+}
+
+// eclipse 프로젝트 이름 및 기타 설정하기
+eclipse {
+    project {
+        name = "spice-app"
+    }
+    jdt {
+      sourceCompatibility = 17
+      targetCompatibility = 17
+      javaRuntimeName = "JavaSE-17"
+    }
+}
+
